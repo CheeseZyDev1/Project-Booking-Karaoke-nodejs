@@ -1,9 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
-
 const app = express();
-
 app.use(express.json());
 
 const sequelize = new Sequelize({
