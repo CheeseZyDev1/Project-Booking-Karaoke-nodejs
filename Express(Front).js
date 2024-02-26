@@ -1,6 +1,8 @@
 const express = require('express');
 const methodOverride = require('method-override');
+const { Users } = require('./models/users'); // สมมติว่าไฟล์นี้มีการ export โมเดล Users
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
