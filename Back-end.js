@@ -141,7 +141,16 @@ app.delete('/users/:id', async (req, res) => {
     }
 });
 //CRUD ROOM
-app.get('/rooms', async (req, res) => {
+app.get('/rooms', async(req,res) => {
+    try{
+        const rooms = await Rooms.findAll();
+        res.status(200).json(rooms)
+    }catch(error){
+        res.status(404).send(err)
+    }
+});
+
+app.get('/rooms/create', async (req, res) => {
     try {
         const room = await Rooms.create(req.body);
         res.status(200).json(room);
@@ -177,8 +186,16 @@ app.delete('/rooms/:id', async (req, res) => {
     }
 });
 //CRUD BOOKING
-
 app.get('/bookings', async (req, res) => {
+    try {
+        const bookings = await Bookings.findAll();
+        res.status(200).json(bookings);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get('/bookings/create', async (req, res) => {
     try {
         const booking = await Bookings.create(req.body);
         res.status(200).json(booking);

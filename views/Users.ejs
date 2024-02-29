@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Users</h1>
-    <table>
+    <table border="1">
         <thead>
             <tr>
                 <th>User ID</th>
@@ -18,18 +18,26 @@
             </tr>
         </thead>
         <tbody>
-            <% users.forEach(user => { %>
+            <% if (users && users.length > 0) { %>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.UserID %></td>
+                        <td><%= user.Username %></td>
+                        <td><%= user.Email %></td>
+                        <td><%= user.Phone %></td>
+                        <td>
+                            <a href="/users/edit/<%= user.UserID %>">Edit</a> | 
+                            <form action="/users/<%= user.UserID %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure?');">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
                 <tr>
-                    <td><%= user.UserID %></td>
-                    <td><%= user.Username %></td>
-                    <td><%= user.Email %></td>
-                    <td><%= user.Phone %></td>
-                    <td>
-                        <a href="/users/edit/<%= user.UserID %>">Edit</a> | 
-                        <a href="/users/delete/<%= user.UserID %>" onclick="return confirm('Are you sure?');">Delete</a>
-                    </td>
+                    <td colspan="5">No users found.</td>
                 </tr>
-            <% }) %>
+            <% } %>
         </tbody>
     </table>
 </body>
