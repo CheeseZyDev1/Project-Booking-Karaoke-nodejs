@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Rooms</title>
+</head>
+<body>
+    <h1>Rooms</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Room ID</th>
+                <th>Room Name</th>
+                <th>Capacity</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rooms.forEach(room => { %>
+                <tr>
+                    <td><%= room.RoomID %></td>
+                    <td><%= room.RoomName %></td>
+                    <td><%= room.Capacity %></td>
+                    <td><%= room.Status %></td>
+                    <td>
+                        <a href="/rooms/edit/<%= room.RoomID %>">Edit</a> | 
+                        <a href="/rooms/delete/<%= room.RoomID %>" onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

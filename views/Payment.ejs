@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Payment Details</title>
+</head>
+<body>
+    <h1>Payment Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Payment Status</th>
+                <th>Payment Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% paymentDetails.forEach(detail => { %>
+                <tr>
+                    <td><%= detail.PaymentID %></td>
+                    <td><%= detail.Amount.toFixed(2) %></td>
+                    <td><%= detail.PaymentMethod %></td>
+                    <td><%= detail.PaymentStatus %></td>
+                    <td><%= new Date(detail.PaymentDate).toLocaleDateString() %></td>
+                    <td>
+                        <a href="/paymentdetails/edit/<%= detail.PaymentID %>">Edit</a> | 
+                        <a href="/paymentdetails/delete/<%= detail.PaymentID %>" onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

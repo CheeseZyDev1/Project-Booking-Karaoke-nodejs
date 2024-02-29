@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Booking</title>
+</head>
+<body>
+    <h1><%= booking ? "Edit" : "Add" %> Booking</h1>
+    <form action="<%= booking ? `/bookings/update/${booking.BookingID}` : '/bookings/create' %>" method="post">
+        <!-- Fields for selecting User, Room, StartTime, EndTime, and Status -->
+        <!-- This is a simplified version. In a real application, you'd likely use <select> elements populated with users and rooms. -->
+        <label for="startTime">Start Time:</label>
+        <input type="datetime-local" id="startTime" name="StartTime" value="<%= booking ? booking.StartTime : '' %>" required>
+
+        <label for="endTime">End Time:</label>
+        <input type="datetime-local" id="endTime" name="EndTime" value="<%= booking ? booking.EndTime : '' %>" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="Status" required>
+            <option value="Pending" <%= booking && booking.Status === 'Pending' ? 'selected' : '' %>>Pending</option>
+            <option value="Confirmed" <%= booking && booking.Status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+            <option value="Cancelled" <%= booking && booking.Status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+        </select>
+        
+        <button type="submit"><%= booking ? "Update" : "Create" %></button>
+    </form>
+</body>
+</html>

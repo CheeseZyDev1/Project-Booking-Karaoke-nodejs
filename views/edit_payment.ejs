@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= paymentDetail ? 'Edit' : 'Add' %> Payment Detail</title>
+</head>
+<body>
+    <h1><%= paymentDetail ? 'Edit' : 'Add' %> Payment Detail</h1>
+    <form action="<%= paymentDetail ? '/paymentdetails/update/' + paymentDetail.PaymentID : '/paymentdetails/create' %>" method="post">
+        <div>
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" value="<%= paymentDetail ? paymentDetail.Amount : '' %>" required>
+        </div>
+        <div>
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" name="paymentMethod" required>
+                <option value="Credit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Credit Card' ? 'selected' : '' %>>Credit Card</option>
+                <option value="Debit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Debit Card' ? 'selected' : '' %>>Debit Card</option>
+                <option value="Cash" <%= paymentDetail && paymentDetail.PaymentMethod === 'Cash' ? 'selected' : '' %>>Cash</option>
+            </select>
+        </div>
+        <div>
+            <label for="paymentStatus">Payment Status:</label>
+            <select id="paymentStatus" name="paymentStatus" required>
+                <option value="Pending" <%= paymentDetail && paymentDetail.PaymentStatus === 'Pending' ? 'selected' : '' %>>Pending</option>
+                <option value="Completed" <%= paymentDetail && paymentDetail.PaymentStatus === 'Completed' ? 'selected' : '' %>>Completed</option>
+                <option value="Refunded" <%= paymentDetail && paymentDetail.PaymentStatus === 'Refunded' ? 'selected' : '' %>>Refunded</option>
+            </select>
+        </div>
+        <div>
+            <label for="paymentDate">Payment Date:</label>
+            <input type="date" id="paymentDate" name="paymentDate" value="<%= paymentDetail ? new Date(paymentDetail.PaymentDate).toISOString().split('T')[0] : '' %>" required>
+        </div>
+        <button type="submit"><%= paymentDetail ? 'Update' : 'Submit' %></button>
+    </form>
+</body>
+</html>

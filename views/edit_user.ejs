@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= user ? 'Edit' : 'Add' %> User</title>
+</head>
+<body>
+    <h1><%= user ? 'Edit' : 'Add' %> User</h1>
+    <form action="<%= user ? base_url + '/users/' + user.id + '?_method=PUT' : base_url + '/users' %>" method="POST">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<%= user ? user.username : '' %>" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<%= user ? user.email : '' %>" required>
+        </div>
+        <button type="submit"><%= user ? 'Update' : 'Create' %></button>
+    </form>
+    <a href="<%= base_url %>/users">Back to User List</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Detail</title>
+</head>
+<body>
+    <h1>Payment Detail</h1>
+    <div>
+        <p><strong>Payment ID:</strong> <%= paymentDetail.PaymentID %></p>
+        <p><strong>Amount:</strong> <%= paymentDetail.Amount.toFixed(2) %></p>
+        <p><strong>Payment Method:</strong> <%= paymentDetail.PaymentMethod %></p>
+        <p><strong>Payment Status:</strong> <%= paymentDetail.PaymentStatus %></p>
+        <p><strong>Payment Date:</strong> <%= new Date(paymentDetail.PaymentDate).toLocaleDateString() %></p>
+        <a href="/paymentdetails/edit/<%= paymentDetail.PaymentID %>">Edit</a> | 
+        <a href="/paymentdetails/delete/<%= paymentDetail.PaymentID %>" onclick="return confirm('Are you sure?');">Delete</a>
+    </div>
+</body>
+</html>

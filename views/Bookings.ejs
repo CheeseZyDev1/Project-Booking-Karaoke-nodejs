@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings</title>
+</head>
+<body>
+    <h1>Bookings</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% bookings.forEach(booking => { %>
+                <tr>
+                    <td><%= booking.BookingID %></td>
+                    <td><%= booking.StartTime %></td>
+                    <td><%= booking.EndTime %></td>
+                    <td><%= booking.Status %></td>
+                    <td>
+                        <a href="/bookings/edit/<%= booking.BookingID %>">Edit</a> | 
+                        <a href="/bookings/delete/<%= booking.BookingID %>" onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

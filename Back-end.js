@@ -104,21 +104,22 @@ Bookings.hasOne(PaymentDetails, { foreignKey: 'BookingID' });
 
 //CRUD
 // CRUD Operations for Users
-app.post('/users', async (req, res) => {
+// Add a GET route to retrieve all users
+app.get('/users', async (req, res) => {
     try {
-        const user = await Users.create(req.body);
-        res.status(201).json(user);
+        const users = await Users.findAll();
+        res.status(200).json(users);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-app.put('/users/:id', async (req, res) => {
+// Add a GET route to retrieve a single user by UserID
+app.get('/users/:id', async (req, res) => {
     try {
-        const [updated] = await Users.update(req.body, { where: { UserID: req.params.id } });
-        if (updated) {
-            const updatedUser = await Users.findOne({ where: { UserID: req.params.id } });
-            res.status(200).json(updatedUser);
+        const user = await Users.findByPk(req.params.id);
+        if (user) {
+            res.status(200).json(user);
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -140,16 +141,16 @@ app.delete('/users/:id', async (req, res) => {
     }
 });
 //CRUD ROOM
-app.post('/rooms', async (req, res) => {
+app.get('/rooms', async (req, res) => {
     try {
         const room = await Rooms.create(req.body);
-        res.status(201).json(room);
+        res.status(200).json(room);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-app.put('/rooms/:id', async (req, res) => {
+app.get('/rooms/:id', async (req, res) => {
     try {
         const [updated] = await Rooms.update(req.body, { where: { RoomID: req.params.id } });
         if (updated) {
@@ -177,16 +178,16 @@ app.delete('/rooms/:id', async (req, res) => {
 });
 //CRUD BOOKING
 
-app.post('/bookings', async (req, res) => {
+app.get('/bookings', async (req, res) => {
     try {
         const booking = await Bookings.create(req.body);
-        res.status(201).json(booking);
+        res.status(200).json(booking);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-app.put('/bookings/:id', async (req, res) => {
+app.get('/bookings/:id', async (req, res) => {
     try {
         const [updated] = await Bookings.update(req.body, { where: { BookingID: req.params.id } });
         if (updated) {
@@ -213,16 +214,16 @@ app.delete('/bookings/:id', async (req, res) => {
     }
 });
 //CRUD PAYMENT
-app.post('/paymentdetails', async (req, res) => {
+app.get('/paymentdetails', async (req, res) => {
     try {
         const paymentDetail = await PaymentDetails.create(req.body);
-        res.status(201).json(paymentDetail);
+        res.status(200).json(paymentDetail);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-app.put('/paymentdetails/:id', async (req, res) => {
+app.get('/paymentdetails/:id', async (req, res) => {
     try {
         const [updated] = await PaymentDetails.update(req.body, { where: { PaymentID: req.params.id } });
         if (updated) {
