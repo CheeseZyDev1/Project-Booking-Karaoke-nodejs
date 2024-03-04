@@ -54,7 +54,7 @@ app.get('/rooms', async (req,res) => {
             const response = await axios.get(base_url + '/rooms');
             res.render("Rooms", { rooms : response.data }); // 
         }catch(error){
-            res.status(500).render('error', { message: 'Server error while retrieving users' });
+            res.status(500).render('error', { message: 'Server error while retrieving rooms' });
         }
 });
 
@@ -63,7 +63,16 @@ app.get('/bookings',async (req,res) => {
         const response = await axios.get(base_url + '/bookings')
         res.render('Bookings',{bookings : response.data})
     }catch(error){
-        res.status(500).render('error', { message: 'Server error while retrieving users' });
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
+
+app.get('/paymentdetails',async (req,res) => {
+    try{
+        const response = await axios.get(base_url + '/paymentdetails')
+        res.render("Payment",{"paymentDetails":response.data})
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
     }
 })
 

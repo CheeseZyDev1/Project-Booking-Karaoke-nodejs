@@ -128,6 +128,15 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
+app.post('/users/create', async (req,res) => {
+    try{
+        const users = await Users.create(req.body);
+        res.status(200).json(users);
+    }catch(err){
+        res.status(400).json({ error: error.message });
+    }
+})
+
 app.delete('/users/:id', async (req, res) => {
     try {
         const deleted = await Users.destroy({ where: { UserID: req.params.id } });
@@ -232,6 +241,15 @@ app.delete('/bookings/:id', async (req, res) => {
 });
 //CRUD PAYMENT
 app.get('/paymentdetails', async (req, res) => {
+    try {
+        const paymentDetail = await PaymentDetails.findAll();
+        res.status(200).json(paymentDetail);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get('/paymentdetails/create', async (req, res) => {
     try {
         const paymentDetail = await PaymentDetails.create(req.body);
         res.status(200).json(paymentDetail);
