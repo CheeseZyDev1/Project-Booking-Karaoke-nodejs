@@ -77,10 +77,14 @@
     </nav>
      <br><br>
     <h1>Create a New Booking</h1>
-    <form action="/bookings/create" method="post">
+    <form action="/booking/create" method="post">
         <div class="mb-3">
-            <label for="bookingDate" class="form-label">Booking Date:</label>
-            <input type="date" id="bookingDate" name="bookingDate" class="form-control" required>
+            <label for="bookingDate" class="form-label">Booking Date Start:</label>
+            <input type="date" id="bookingDate" name="bookingDate_start" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="bookingDate" class="form-label">Booking Date End:</label>
+            <input type="date" id="bookingDate" name="bookingDate_end" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="room" class="form-label">Room:</label>

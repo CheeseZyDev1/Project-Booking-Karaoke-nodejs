@@ -245,7 +245,16 @@ app.get('/bookings', async (req, res) => {
     }
 });
 
-app.post('/bookings/create', async (req, res) => {
+app.get('/bookings/:id', async (req, res) => {
+    try {
+        const bookings = await Bookings.findByPk(req.params.id);
+        res.status(200).json(bookings);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.post('/booking/create', async (req, res) => {
     try {
         const booking = await Bookings.create(req.body);
         res.status(200).json(booking);
@@ -254,14 +263,13 @@ app.post('/bookings/create', async (req, res) => {
     }
 });
 
-app.get('/bookings/:id', async (req, res) => {
+app.put('/booking/edit/:id', async (req, res) => {
     try {
-        const [updated] = await Bookings.update(req.body, { where: { BookingID: req.params.id } });
-        if (updated) {
-            const updatedBooking = await Bookings.findOne({ where: { BookingID: req.params.id } });
-            res.status(200).json(updatedBooking);
-        } else {
-            res.status(404).json({ error: 'Booking not found' });
+        const booking = await Bookings.findByPk(req.params.id)
+        if(!booking){
+            res.status(404).send('Not found booking')
+        }else{
+            booking.update(req.body)
         }
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -281,6 +289,29 @@ app.delete('/bookings/:id', async (req, res) => {
     }
 });
 //CRUD PAYMENT
+app.get('/paymentdetails/create', (req, res) => {
+    res.render('create_payment');
+});
+app.post('/paymentdetails/create', async (req, res) => {
+    try {
+        const { amount, paymentMethod, paymentStatus, paymentDate } = req.body;
+
+        // Assuming PaymentDetails is your Sequelize model for the payments table
+        const newPayment = await PaymentDetails.create({
+            Amount: amount,
+            PaymentMethod: paymentMethod,
+            PaymentStatus: paymentStatus,
+            PaymentDate: paymentDate
+        });
+
+        // Redirect to a new page or send a success response
+        res.redirect('/paymentdetails'); // or any other page you'd like to redirect to
+    } catch (error) {
+        console.error('Failed to create payment:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 app.get('/paymentdetails', async (req, res) => {
     try {
         const paymentDetail = await PaymentDetails.findAll();

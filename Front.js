@@ -248,6 +248,45 @@ app.get('/booking/create',(req,res) => {
         res.status(500).render('error', { message: 'Server error while retrieving bookings' });
     }
 })
+
+app.post('/booking/create', async (req,res)  => {
+    try{
+        const data = {
+            StartTime:req.body.bookingDate_start,
+            EndTime:req.body.bookingDate_end,
+            Status:req.body.room,
+            UserID:req.body.userID,
+            RoomID:req.body.roomID
+        }
+        await axios.post(base_url+'/booking/create',data)
+        res.redirect('/bookings')
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
+
+app.get('/booking/edit/:id',async (req,res) => {
+    try{
+        const response  = await axios.get(base_url+'/bookings/'+req.params.id)
+        res.render('edit_booking',{'booking':response.data})
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
+
+app.post('/booking/update/:id', async (req,res)  => {
+    try{
+        const data = {
+            StartTime:req.body.starttime,
+            EndTime:req.body.endtime,
+            Status:req.body.Status,
+        }
+        await axios.put(base_url+'/booking/edit/'+req.params.id,data)
+        res.redirect('/bookings')
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/paymentdetails',async (req,res) => {
     try{

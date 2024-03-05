@@ -87,8 +87,8 @@
                         <td><%= booking.EndTime %></td>
                         <td><%= booking.Status %></td>
                         <td>
-                            <a href="/bookings/edit/<%= booking.BookingID %>" class="btn btn-primary">Edit</a>
-                            <a href="/bookings/delete/<%= booking.BookingID %>" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                            <a href="/booking/edit/<%= booking.BookingID %>" class="btn btn-primary">Edit</a>
+                            <a href="/booking/delete/<%= booking.BookingID %>" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
                         </td>
                     </tr>
                 <% }) %>
