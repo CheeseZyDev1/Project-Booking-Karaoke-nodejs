@@ -174,6 +174,14 @@ app.delete('/users/:id', async (req, res) => {
     });
 });
 //CRUD ROOM
+app.get('/bookings/create', async (req, res) => {
+    // Fetch rooms from the database
+    const rooms = await Rooms.findAll();
+    
+    // Render the EJS template with rooms data
+    res.render('create_booking', { rooms }); // Assuming 'create_booking.ejs' is the name of your EJS file
+});
+
 app.get('/rooms', async(req,res) => {
     try{
         const rooms = await Rooms.findAll();
@@ -237,7 +245,7 @@ app.get('/bookings', async (req, res) => {
     }
 });
 
-app.get('/bookings/create', async (req, res) => {
+app.post('/bookings/create', async (req, res) => {
     try {
         const booking = await Bookings.create(req.body);
         res.status(200).json(booking);

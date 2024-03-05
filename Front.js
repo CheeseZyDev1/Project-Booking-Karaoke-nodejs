@@ -241,6 +241,14 @@ app.get('/bookings',async (req,res) => {
     }
 })
 
+app.get('/booking/create',(req,res) => {
+    try{
+        res.render('create_booking');
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/paymentdetails',async (req,res) => {
     try{
         const response = await axios.get(base_url + '/paymentdetails')
