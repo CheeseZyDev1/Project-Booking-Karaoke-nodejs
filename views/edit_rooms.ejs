@@ -3,24 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Room</title>
+    <title>Karaoke - Edit Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            padding-top: 60px; /* Adjust based on the navbar height */
+        }
+        .container {
+            max-width: 600px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        button[type="submit"] {
+            margin-top: 20px;
+        }
+        body {
+            padding-top: 60px; /* Adjust based on the navbar height */
+        }
+        .container {
+            max-width: 600px;
+        }
+        .form-border {
+            border: 1px solid #ced4da;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        .form-border label {
+            font-weight: bold;
+        }
+        button[type="submit"] {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1><%= room ? "Edit" : "Add" %> Room</h1>
-    <form action="<%= room ? `/rooms/update/${room.RoomID}` : '/rooms/create' %>" method="post">
-        <label for="roomName">Room Name:</label>
-        <input type="text" id="roomName" name="roomname" value="<%= room ? room.roomname : '' %>" required>
-        
-        <label for="capacity">Capacity:</label>
-        <input type="number" id="capacity" name="capacity" value="<%= room ? room.capacity : '' %>" required>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Karaoke</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <label for="status">Status:</label>
-        <select id="status" name="Status" required>
-            <option value="Available" <%= room && room.Status === 'Available' ? 'selected' : '' %>>Available</option>
-            <option value="Booked" <%= room && room.Status === 'Booked' ? 'selected' : '' %>>Booked</option>
-        </select>
-        
-        <button type="submit"><%= room ? "Update" : "Create" %></button>
-    </form>
+    <div class="container">
+        <h1 class="mt-5"><%= room ? "Edit" : "Add" %> Room</h1>
+        <form action="/rooms/edit/<%=room.RoomID%>" method="post">
+          <div class="form-border">
+            <div class="mb-3">
+                <label for="roomName" class="form-label">Room Name:</label>
+                <input type="text" id="roomName" name="roomname" class="form-control" value="<%= room.RoomName %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacity" class="form-label">Capacity:</label>
+                <input type="number" id="capacity" name="capacity" class="form-control" value="<%= room ? room.Capacity : '' %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label>
+                <select id="status" name="status" class="form-select" required>
+                    <option value="Empty">Empty</option>
+                    <option value="Using">Using</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"><%= room ? "Update" : "Create" %></button>
+        </form>
+    </div>
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HiFjZj+zqLdYv+X2PlE6dPi8uZ5lBxZ/bx9uJwbWkxyoR3e/4yRGwXkoPbvd+O/e" crossorigin="anonymous"></script>
 </body>
 </html>

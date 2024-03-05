@@ -20,15 +20,10 @@ app.use(express.static('public'));
 app.post('/users', async (req, res) => {
     try {
         // Construct user data from the request body
-        const userData = {
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            phone: req.body.phone
-        };
+        const userData = {Username:req.body.username, Password:req.body.password, Email:req.body.email, Phone:req.body.phone};
 
         // Send a POST request to the backend API to create a new user
-        const response = await axios.post(base_url + '/users/create', userData);
+         await axios.post(base_url + '/users/create', userData);
 
         // Redirect the user back to the users page after successful creation
         res.redirect('/users');
@@ -57,7 +52,7 @@ app.get('/users/edit/:id', async (req,res) => {
     }catch(err){
         res.status(500).render('error', { message: 'Server error while retrieving users' });
     }
-})
+});
 app.post('/users/:id',async (req,res) => {
     try{
         const data = {Username:req.body.username, Password:req.body.password, Email:req.body.email, Phone:req.body.phone};
@@ -66,7 +61,7 @@ app.post('/users/:id',async (req,res) => {
     }catch(err){
         res.status(500).render('error', { message: 'Server error while retrieving users' });
     }
-})
+});
 // Add a new user
 app.get('/user/create',(req,res) => {
     try{
@@ -74,7 +69,7 @@ app.get('/user/create',(req,res) => {
     }catch(err){
         res.status(500).render('error', { message: 'Server error while retrieving users' });
     }
-})
+});
 // Delete a user
 app.get('/users/delete/:id', async (req, res) => {
     try{
@@ -86,14 +81,156 @@ app.get('/users/delete/:id', async (req, res) => {
     }
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/rooms', async (req,res) => {
         try{
             const response = await axios.get(base_url + '/rooms');
-            res.render("Rooms", { rooms : response.data }); // 
+            res.render("rooms", { rooms : response.data }); // 
         }catch(error){
             res.status(500).render('error', { message: 'Server error while retrieving rooms' });
         }
 });
+app.post('/rooms', async (req, res) => {
+    try {
+        // Construct user data from the request body
+        const data = {RoomName:req.body.roomname, Capacity:req.body.capacity,Status:req.body.status };
+
+        // Send a POST request to the backend API to create a new user
+        const response = await axios.post(base_url + '/rooms/create', data);
+
+        // Redirect the user back to the rooms page after successful creation
+        res.redirect('/rooms');
+    } catch (error) {
+        console.error(error);
+        // Render an error page if the creation fails
+        res.status(400).render('error', { message: 'Unable to create user' });
+    }
+});
+
+app.get('/rooms', async (req, res) => {
+    try {
+        const response = await axios.get(base_url + '/rooms');
+        res.render("rooms", { rooms : response.data }); // Make sure 'rooms.ejs' exists
+    } catch (error) {
+        console.error(error);
+        // Render an 'error.ejs' view if it exists, passing an error message
+        res.status(500).render('error', { message: 'Server error while retrieving rooms' });
+    }
+});
+
+app.get('/rooms/edit/:id', async (req,res) => {
+    try{
+        const response = await axios.get(base_url+'/rooms/'+req.params.id)
+        res.render('edit_rooms',{'room' : response.data})
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving rooms' });
+    }
+});
+app.post('/rooms/edit/:id',async (req,res) => {
+    try{
+        const data = {RoomName:req.body.roomname, Capacity:req.body.capacity,Status:req.body.status };
+        await axios.put(base_url+'/rooms/'+req.params.id,data)
+        res.redirect('/rooms')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving rooms' });
+    }
+});
+// Add a new user
+app.get('/rooms/create',(req,res) => {
+    try{
+        res.render('create_rooms')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving rooms' });
+    }
+});
+// Delete a user
+app.get('/rooms/delete/:id', async (req, res) => {
+    try{
+        await axios.delete(base_url+'/rooms/'+req.params.id);
+        res.redirect("/rooms");
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err);
+    }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/payment', async (req,res) => {
+    try{
+        const response = await axios.get(base_url + '/payment');
+        res.render("payment", { payment : response.data }); // 
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving payment' });
+    }
+});
+app.post('/payment', async (req, res) => {
+try {
+    // Construct user data from the request body
+  /*  const userData = {
+        {RoomName:req.body.roomname, Capacity:req.body.capacity,Status:req.body.status 
+        Amount :req.body.amount,
+        PaymentMethod :req.body.
+    };*/
+
+    // Send a POST request to the backend API to create a new user
+    const response = await axios.post(base_url + '/payment/create', userData);
+
+    // Redirect the user back to the payment page after successful creation
+    res.redirect('/payment');
+} catch (error) {
+    console.error(error);
+    // Render an error page if the creation fails
+    res.status(400).render('error', { message: 'Unable to create user' });
+}
+});
+
+app.get('/payment', async (req, res) => {
+try {
+    const response = await axios.get(base_url + '/payment');
+    res.render("payment", { payment : response.data }); // Make sure 'payment.ejs' exists
+} catch (error) {
+    console.error(error);
+    // Render an 'error.ejs' view if it exists, passing an error message
+    res.status(500).render('error', { message: 'Server error while retrieving payment' });
+}
+});
+
+app.get('/payment/edit/:id', async (req,res) => {
+try{
+    const response = await axios.get(base_url+'/payment/'+req.params.id)
+    res.render('edit_payment',{'payment' : response.data})
+}catch(err){
+    res.status(500).render('error', { message: 'Server error while retrieving payment' });
+}
+});
+app.post('/payment/:id',async (req,res) => {
+try{
+    const data = {Username:req.body.username, Password:req.body.password, Email:req.body.email, Phone:req.body.phone};
+    await axios.put(base_url+'/payment/'+req.params.id,data)
+    res.redirect('/payment')
+}catch(err){
+    res.status(500).render('error', { message: 'Server error while retrieving payment' });
+}
+});
+// Add a new user
+app.get('/payment/create',(req,res) => {
+try{
+    res.render('create_payment')
+}catch(err){
+    res.status(500).render('error', { message: 'Server error while retrieving payment' });
+}
+});
+// Delete a user
+app.get('/payment/delete/:id', async (req, res) => {
+try{
+    await axios.delete(base_url+'/payment/'+req.params.id);
+    res.redirect("/payment");
+}catch(err){
+    console.log(err);
+    res.status(500).send(err);
+}
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/bookings',async (req,res) => {
     try{
@@ -112,7 +249,7 @@ app.get('/paymentdetails',async (req,res) => {
         res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
     }
 })
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(5500, () => {
     console.log('Server started on port 5500');

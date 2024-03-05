@@ -108,15 +108,11 @@ Bookings.hasOne(PaymentDetails, { foreignKey: 'BookingID' });
 
 // Route สำหรับการสร้างผู้ใช้ใหม่
 app.post('/users/create', async (req, res) => {
-    try {
-        const newUser = await Users.create({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
-        });
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    try{
+        await Users.create(req.body);
+        res.status(200).json({});
+    }catch(error){
+        res.status(400).json({ error: error.message });
     }
 });
 
@@ -187,7 +183,16 @@ app.get('/rooms', async(req,res) => {
     }
 });
 
-app.get('/rooms/create', async (req, res) => {
+app.get('/rooms/:id', async(req,res) => {
+    try{
+        const rooms = await Rooms.findByPk(req.params.id);
+        res.status(200).json(rooms)
+    }catch(error){
+        res.status(404).send(err)
+    }
+});
+
+app.post('/rooms/create', async (req, res) => {
     try {
         const room = await Rooms.create(req.body);
         res.status(200).json(room);
@@ -196,7 +201,7 @@ app.get('/rooms/create', async (req, res) => {
     }
 });
 
-app.get('/rooms/:id', async (req, res) => {
+app.put('/rooms/:id', async (req, res) => {
     try {
         const [updated] = await Rooms.update(req.body, { where: { RoomID: req.params.id } });
         if (updated) {
