@@ -11,10 +11,10 @@
         <!-- Fields for selecting User, Room, StartTime, EndTime, and Status -->
         <!-- This is a simplified version. In a real application, you'd likely use <select> elements populated with users and rooms. -->
         <label for="startTime">Start Time:</label>
-        <input type="datetime-local" id="startTime" name="StartTime" value="<%= booking ? booking.StartTime : '' %>" required>
+        <input type="datetime-local" id="startTime" name="starttime" value="<%= booking ? booking.starttime : '' %>" required>
 
         <label for="endTime">End Time:</label>
-        <input type="datetime-local" id="endTime" name="EndTime" value="<%= booking ? booking.EndTime : '' %>" required>
+        <input type="datetime-local" id="endTime" name="endtime" value="<%= booking ? booking.endtime : '' %>" required>
 
         <label for="status">Status:</label>
         <select id="status" name="Status" required>
