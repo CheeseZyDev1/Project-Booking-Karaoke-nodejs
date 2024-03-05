@@ -262,6 +262,41 @@ app.post('/booking/create', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+app.get('/bookings/edit/:id', async (req, res) => {
+    const bookingId = req.params.id;
+    const booking = await Booking.findByPk(bookingId); // Assuming Booking is your Sequelize model
+
+    if (!booking) {
+        return res.status(404).send('Booking not found');
+    }
+
+    res.render('edit_booking', { booking });
+});
+app.post('/bookings/edit/:id', async (req, res) => {
+    const bookingId = req.params.id;
+    const { userId, roomId, startTime, endTime } = req.body;
+
+    try {
+        const booking = await Booking.findByPk(bookingId);
+
+        if (!booking) {
+            return res.status(404).send('Booking not found');
+        }
+
+        await booking.update({
+            UserId: userId,
+            RoomId: roomId,
+            StartTime: startTime,
+            EndTime: endTime
+        });
+
+        // Redirect to a confirmation page, booking list, or show a success message
+        res.redirect('/bookings'); // or any other page
+    } catch (error) {
+        console.error('Failed to update booking:', error);
+        res.status(500).send('Server error');
+    }
+});
 
 app.put('/booking/edit/:id', async (req, res) => {
     try {

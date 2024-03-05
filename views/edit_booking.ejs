@@ -48,6 +48,14 @@
         .form-border button[type="submit"]:hover {
             background-color: #0056b3;
         }
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -82,19 +90,29 @@
             <form action="<%= booking ? `/booking/update/${booking.BookingID}` : '/bookings/create' %>" method="post">
                 <!-- Fields for selecting User, Room, StartTime, EndTime, and Status -->
                 <!-- This is a simplified version. In a real application, you'd likely use <select> elements populated with users and rooms. -->
-                <label for="startTime">Start Time:</label>
-                <input type="date" id="startTime" name="starttime" value="<%= booking ? booking.StartTime : '' %>" required>
-
-                <label for="endTime">End Time:</label>
-                <input type="date" id="endTime" name="endtime" value="<%= booking ? booking.EndTime : '' %>" required>
-
+                <div class="mb-3">
+                    <label for="startTime">Start Time:</label>
+                    <input type="date" id="startTime" name="starttime" value="<%= booking ? booking.StartTime : '' %>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="endTime">End Time:</label>
+                    <input type="date" id="endTime" name="endtime" value="<%= booking ? booking.EndTime : '' %>" required>
+                </div>
                 <label for="status">Status:</label>
                 <select id="status" name="Status" required>
                     <option value="Pending" <%= booking && booking.Status === 'Pending' ? 'selected' : '' %>>Pending</option>
                     <option value="Confirmed" <%= booking && booking.Status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
                     <option value="Cancelled" <%= booking && booking.Status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
                 </select>
-                
+                <div class="mb-3">
+                    <label for="userId">User ID:</label>
+                    <input type="text" id="userId" name="userId" value="<%= booking.UserID %>" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="roomId">Room ID:</label>
+                    <input type="text" id="roomId" name="roomId" value="<%= booking.RoomID %>" class="form-control" required>
+                </div>
+            
                 <button type="submit"><%= booking ? "Update" : "Create" %></button>
             </form>
         </div>
