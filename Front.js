@@ -68,16 +68,13 @@ app.post('/users/:id',async (req,res) => {
     }
 })
 // Add a new user
-app.post('/users', async (req, res) => {
-    try {
-        await Users.create(req.body);
-        res.redirect('/users');
-    } catch (error) {
-        console.error(error);
-        res.status(400).render('error', { message: 'Unable to create user' });
+app.get('/user/create',(req,res) => {
+    try{
+        res.render('create_users')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving users' });
     }
-});
-
+})
 // Delete a user
 app.get('/users/delete/:id', async (req, res) => {
     try{
