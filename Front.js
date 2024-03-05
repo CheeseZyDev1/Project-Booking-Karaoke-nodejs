@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const methodOverride = require('method-override');
 var bodyParser = require('body-parser');
+const { render } = require('ejs');
 const app = express();
 
 app.use(express.json());
@@ -26,7 +27,23 @@ app.get('/users', async (req, res) => {
     }
 });
 
-
+app.get('/users/edit/:id', async (req,res) => {
+    try{
+        const response = await axios.get(base_url+'/users/'+req.params.id)
+        res.render('edit_user',{'user' : response.data})
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving users' });
+    }
+})
+app.post('/users/:id',async (req,res) => {
+    try{
+        const data = {Username:req.body.username, Password:req.body.password, Email:req.body.email, Phone:req.body.phone};
+        await axios.put(base_url+'/user/'+req.params.id,data)
+        res.redirect('/users')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving users' });
+    }
+})
 // Add a new user
 app.post('/users', async (req, res) => {
     try {
@@ -39,13 +56,13 @@ app.post('/users', async (req, res) => {
 });
 
 // Delete a user
-app.delete('/users/:id', async (req, res) => {
-    try {
-        await Users.destroy({ where: { UserID: req.params.id } });
-        res.redirect('/users');
-    } catch (error) {
-        console.error(error);
-        res.status(500).render('error', { message: 'Server error while deleting user' });
+app.get('/users/delete/:id', async (req, res) => {
+    try{
+        await axios.delete(base_url+'/users/'+req.params.id);
+        res.redirect("/users");
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err);
     }
 });
 

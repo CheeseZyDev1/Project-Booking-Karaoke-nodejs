@@ -137,17 +137,37 @@ app.post('/users/create', async (req,res) => {
     }
 })
 
-app.delete('/users/:id', async (req, res) => {
-    try {
-        const deleted = await Users.destroy({ where: { UserID: req.params.id } });
-        if (deleted) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ error: 'User not found' });
+app.put('/user/:id' , (req,res) => {
+    Users.findByPk(req.params.id).then(user => {
+        if(!user){
+            res.status(500).send('Book not found');
         }
-    } catch (error) {
+        else{
+            user.update(req.body).then(() => {
+                res.send(user);
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
+app.delete('/users/:id', async (req, res) => {
+    Users.findByPk(req.params.id).then(user => {
+        if(!user){
+            res.status(404).send('Book not found');
+        } else {
+            user.destroy().then(() =>{
+            res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    }).catch (error =>{
         res.status(400).json({ error: error.message });
-    }
+    });
 });
 //CRUD ROOM
 app.get('/rooms', async(req,res) => {

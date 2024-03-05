@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <% if (users && users.length > 0) { %>
+            <% if (users && users.length >= 0) { %>
                 <% users.forEach(user => { %>
                     <tr>
                         <td><%= user.UserID %></td>
@@ -27,9 +27,7 @@
                         <td><%= user.Phone %></td>
                         <td>
                             <a href="/users/edit/<%= user.UserID %>">Edit</a> | 
-                            <form action="/users/<%= user.UserID %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure?');">
-                                <button type="submit">Delete</button>
-                            </form>
+                            <a href="/users/delete/<%= user.UserID %>">Delete</a>
                         </td>
                     </tr>
                 <% }) %>
