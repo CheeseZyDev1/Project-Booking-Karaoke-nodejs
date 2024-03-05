@@ -1,0 +1,44 @@
+<!-- create_user.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+    <form id="createUserForm">
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Create User</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#createUserForm').on('submit', function(e){
+                e.preventDefault();
+                var userDetails = {
+                    username: $('#username').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/create',
+                    data: userDetails,
+                    success: function(response){
+                        // Handle success
+                        alert('User created!');
+                    },
+                    error: function(error){
+                        // Handle error
+                        alert('Error creating user.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

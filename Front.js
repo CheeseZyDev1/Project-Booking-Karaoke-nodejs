@@ -16,6 +16,29 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('public'));
 
+
+app.post('/users', async (req, res) => {
+    try {
+        // Construct user data from the request body
+        const userData = {
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            phone: req.body.phone
+        };
+
+        // Send a POST request to the backend API to create a new user
+        const response = await axios.post(base_url + '/users/create', userData);
+
+        // Redirect the user back to the users page after successful creation
+        res.redirect('/users');
+    } catch (error) {
+        console.error(error);
+        // Render an error page if the creation fails
+        res.status(400).render('error', { message: 'Unable to create user' });
+    }
+});
+
 app.get('/users', async (req, res) => {
     try {
         const response = await axios.get(base_url + '/users');

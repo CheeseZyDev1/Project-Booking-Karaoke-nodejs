@@ -105,6 +105,21 @@ Bookings.hasOne(PaymentDetails, { foreignKey: 'BookingID' });
 //CRUD
 // CRUD Operations for Users
 // Add a GET route to retrieve all users
+
+// Route สำหรับการสร้างผู้ใช้ใหม่
+app.post('/users/create', async (req, res) => {
+    try {
+        const newUser = await Users.create({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        });
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.get('/users', async (req, res) => {
     try {
         const users = await Users.findAll();
@@ -113,6 +128,7 @@ app.get('/users', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
 
 // Add a GET route to retrieve a single user by UserID
 app.get('/users/:id', async (req, res) => {
@@ -128,14 +144,6 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
-app.post('/users/create', async (req,res) => {
-    try{
-        const users = await Users.create(req.body);
-        res.status(200).json(users);
-    }catch(err){
-        res.status(400).json({ error: error.message });
-    }
-})
 
 app.put('/user/:id' , (req,res) => {
     Users.findByPk(req.params.id).then(user => {
