@@ -262,16 +262,6 @@ app.post('/booking/create', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
-app.get('/bookings/edit/:id', async (req, res) => {
-    const bookingId = req.params.id;
-    const booking = await Booking.findByPk(bookingId); // Assuming Booking is your Sequelize model
-
-    if (!booking) {
-        return res.status(404).send('Booking not found');
-    }
-
-    res.render('edit_booking', { booking });
-});
 app.post('/bookings/edit/:id', async (req, res) => {
     const bookingId = req.params.id;
     const { userId, roomId, startTime, endTime } = req.body;
@@ -301,10 +291,11 @@ app.post('/bookings/edit/:id', async (req, res) => {
 app.put('/booking/edit/:id', async (req, res) => {
     try {
         const booking = await Bookings.findByPk(req.params.id)
-        if(!booking){
-            res.status(404).send('Not found booking')
-        }else{
+        if(booking){
             booking.update(req.body)
+            res.status(202).json(booking)
+        }else{
+            res.status(404)
         }
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -87,7 +87,7 @@
     <div class="container"><br><br>
         <h1><%= booking ? "Edit" : "Add" %> Booking</h1>
         <div class="form-border">
-            <form action="<%= booking ? `/booking/update/${booking.BookingID}` : '/bookings/create' %>" method="post">
+            <form action="/booking/update/<%=booking.BookingID%>" method="post">
                 <!-- Fields for selecting User, Room, StartTime, EndTime, and Status -->
                 <!-- This is a simplified version. In a real application, you'd likely use <select> elements populated with users and rooms. -->
                 <div class="mb-3">

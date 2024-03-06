@@ -280,8 +280,19 @@ app.post('/booking/update/:id', async (req,res)  => {
             StartTime:req.body.starttime,
             EndTime:req.body.endtime,
             Status:req.body.Status,
+            UserID:req.body.userId,
+            RoomID:req.body.roomId
         }
         await axios.put(base_url+'/booking/edit/'+req.params.id,data)
+        res.redirect('/bookings')
+    }catch(error){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
+    }
+})
+
+app.get("/booking/delete/:id",(req,res) => {
+    try{
+        axios.delete(base_url+'/bookings/'+req.params.id)
         res.redirect('/bookings')
     }catch(error){
         res.status(500).render('error', { message: 'Server error while retrieving bookings' });
