@@ -315,14 +315,10 @@ app.delete('/bookings/:id', async (req, res) => {
     }
 });
 //CRUD PAYMENT
-app.get('/paymentdetails/create', (req, res) => {
-    res.render('create_payment');
-});
 app.post('/paymentdetails/create', async (req, res) => {
     try {
         const { amount, paymentMethod, paymentStatus, paymentDate } = req.body;
 
-        // Assuming PaymentDetails is your Sequelize model for the payments table
         const newPayment = await PaymentDetails.create({
             Amount: amount,
             PaymentMethod: paymentMethod,
@@ -330,8 +326,6 @@ app.post('/paymentdetails/create', async (req, res) => {
             PaymentDate: paymentDate
         });
 
-        // Redirect to a new page or send a success response
-        res.redirect('/paymentdetails'); // or any other page you'd like to redirect to
     } catch (error) {
         console.error('Failed to create payment:', error);
         res.status(500).send('Server error');
@@ -347,6 +341,15 @@ app.get('/paymentdetails', async (req, res) => {
     }
 });
 
+app.get('/paymentdetail/:id', async (req, res) => {
+    try {
+        const paymentDetail = await PaymentDetails.findByPk(req.params.id);
+        res.status(200).json(paymentDetail);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 app.get('/paymentdetails/create', async (req, res) => {
     try {
         const paymentDetail = await PaymentDetails.create(req.body);
@@ -356,14 +359,15 @@ app.get('/paymentdetails/create', async (req, res) => {
     }
 });
 
-app.get('/paymentdetails/:id', async (req, res) => {
+
+app.put('/paymentdetail/:id', async (req, res) => {
     try {
-        const [updated] = await PaymentDetails.update(req.body, { where: { PaymentID: req.params.id } });
-        if (updated) {
-            const updatedPaymentDetail = await PaymentDetails.findOne({ where: { PaymentID: req.params.id } });
-            res.status(200).json(updatedPaymentDetail);
-        } else {
-            res.status(404).json({ error: 'Payment detail not found' });
+         const payment = await PaymentDetails.findByPk(req.params.id);
+         if(payment){
+            payment.update(req.body); 
+            res.status(202).json(payment)
+        }else{
+            res.status(404).send('Not found payment')
         }
     } catch (error) {
         res.status(400).json({ error: error.message });

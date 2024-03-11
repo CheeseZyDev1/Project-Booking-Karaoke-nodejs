@@ -307,6 +307,40 @@ app.get('/paymentdetails',async (req,res) => {
         res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
     }
 })
+
+app.get('/paymentdetails/edit/:id',async (req,res) => {
+    try{
+        const response = await axios.get(base_url + '/paymentdetail/'+req.params.id)
+        res.render("edit_payment",{"paymentDetail":response.data})
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
+    }
+})
+
+app.post('/paymentdetail/update/:id',async (req,res) => {
+    try{
+        const data = {
+            Amount:req.body.amount,
+            PaymentMethod:req.body.paymentMethod,
+            PaymentStatus:req.body.paymentStatus,
+            PaymentDate:req.body.paymentdate,
+            BookingID:req.body.bookid
+        }
+            await axios.put(base_url+'/paymentdetail/'+req.params.id,data)
+            res.redirect('/paymentdetails')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
+    }
+})
+
+app.get('/paymentdetails/delete/:id',async (req,res) => {
+    try{
+        await axios.delete(base_url+'/paymentdetails/'+req.params.id)
+        res.redirect('/paymentdetails')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
+    }
+})
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(5500, () => {
