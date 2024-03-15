@@ -16,6 +16,15 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('public'));
 
+app.get('/', async (req, res) => {
+    try {
+        res.render('login');
+    } catch (error) {
+        console.error(error);
+        // Render an error page if the creation fails
+        res.status(400).render('error', { message: 'Unable to create user' });
+    }
+});
 
 app.post('/users', async (req, res) => {
     try {
@@ -339,6 +348,14 @@ app.get('/paymentdetails/delete/:id',async (req,res) => {
         res.redirect('/paymentdetails')
     }catch(err){
         res.status(500).render('error', { message: 'Server error while retrieving paymentdetails' });
+    }
+})
+
+app.get('/paymentdetail/create',async(req,res) => {
+    try{
+        res.render('create_payment')
+    }catch(err){
+        res.status(500).render('error', { message: 'Server error while retrieving bookings' });
     }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
