@@ -4,39 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= paymentDetail ? 'Edit' : 'Add' %> Payment Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            padding-top: 60px; /* Adjust based on navbar height */
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1><%= paymentDetail ? 'Edit' : 'Add' %> Payment Detail</h1>
-    <form action="/paymentdetail/update/<%=paymentDetail.PaymentID%>" method="post">
-        <div>
-            <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" value="<%= paymentDetail ? paymentDetail.Amount : '' %>" required>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Karaoke</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div>
-            <label for="paymentMethod">Payment Method:</label>
-            <select id="paymentMethod" name="paymentMethod" required>
-                <option value="Credit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Credit Card' ? 'selected' : '' %>>Credit Card</option>
-                <option value="Debit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Debit Card' ? 'selected' : '' %>>Debit Card</option>
-                <option value="Cash" <%= paymentDetail && paymentDetail.PaymentMethod === 'Cash' ? 'selected' : '' %>>Cash</option>
-            </select>
-        </div>
-        <div>
-            <label for="paymentStatus">Payment Status:</label>
-            <select id="paymentStatus" name="paymentStatus" required>
-                <option value="Pending" <%= paymentDetail && paymentDetail.PaymentStatus === 'Pending' ? 'selected' : '' %>>Pending</option>
-                <option value="Completed" <%= paymentDetail && paymentDetail.PaymentStatus === 'Completed' ? 'selected' : '' %>>Completed</option>
-                <option value="Refunded" <%= paymentDetail && paymentDetail.PaymentStatus === 'Refunded' ? 'selected' : '' %>>Refunded</option>
-            </select>
-        </div>
-        <div>
-            <label for="paymentDate">Payment Date:</label>
-            <input type="date" id="paymentDate" name="paymentdate" value="<%= Date(paymentDetail.paymentdate) %>" required>
-        </div>
-        <div>
-            <label for="paymentDate">BookingID:</label>
-            <input type="text" id="paymentDate" name="bookid" value="<%= paymentDetail.BookingID %>" required>
-        </div>
-        <button type="submit"><%= paymentDetail ? 'Update' : 'Submit' %></button>
-    </form>
+    </nav>
+
+    <div class="container"><br><br>
+        <h1><%= paymentDetail ? 'Edit' : 'Add' %> Payment Detail</h1>
+        <form action="/paymentdetail/update/<%=paymentDetail.PaymentID%>" method="post">
+            <div>
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" name="amount" value="<%= paymentDetail ? paymentDetail.Amount : '' %>" required>
+            </div>
+            <div>
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="Credit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Credit Card' ? 'selected' : '' %>>Credit Card</option>
+                    <option value="Debit Card" <%= paymentDetail && paymentDetail.PaymentMethod === 'Debit Card' ? 'selected' : '' %>>Debit Card</option>
+                    <option value="Cash" <%= paymentDetail && paymentDetail.PaymentMethod === 'Cash' ? 'selected' : '' %>>Cash</option>
+                </select>
+            </div>
+            <div>
+                <label for="paymentStatus">Payment Status:</label>
+                <select id="paymentStatus" name="paymentStatus" required>
+                    <option value="Pending" <%= paymentDetail && paymentDetail.PaymentStatus === 'Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Completed" <%= paymentDetail && paymentDetail.PaymentStatus === 'Completed' ? 'selected' : '' %>>Completed</option>
+                    <option value="Refunded" <%= paymentDetail && paymentDetail.PaymentStatus === 'Refunded' ? 'selected' : '' %>>Refunded</option>
+                </select>
+            </div>
+            <div>
+                <label for="paymentDate">Payment Date:</label>
+                <input type="date" id="paymentDate" name="paymentdate" value="<%= Date(paymentDetail.paymentdate) %>" required>
+            </div>
+            <div>
+                <label for="paymentDate">BookingID:</label>
+                <input type="text" id="paymentDate" name="bookid" value="<%= paymentDetail.BookingID %>" required>
+            </div>
+            <button type="submit"><%= paymentDetail ? 'Update' : 'Submit' %></button>
+            <a href="/paymentdetails/delete/<%= paymentDetail.PaymentID %>" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
