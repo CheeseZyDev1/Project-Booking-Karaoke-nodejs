@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud:11545";
+const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud";
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
