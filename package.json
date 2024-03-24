@@ -2,8 +2,10 @@
   "name": "Project-Booking-Karaoke-nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "Testindex.js",
+  "main": "Front.js",
   "scripts": {
+    "start": "node Front.js",
+    "dev": "nodemon Front.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,9 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.7",
-    "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "http": "^0.0.1-security"
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0"
   }
 }
