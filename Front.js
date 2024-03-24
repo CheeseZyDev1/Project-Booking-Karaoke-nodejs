@@ -1,6 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-//const methodOverride = require('method-override');
 const path = require('path');
 const app = express();
 
@@ -8,8 +7,6 @@ const app = express();
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
-// Method Override for forms that can't send PUT/DELETE directly
-//app.use(methodOverride('_method'));
 
 // Set the template engine to EJS and views directory
 app.set('view engine', 'ejs');
@@ -18,8 +15,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud";
+const base_url = "http://10.104.3.240:3000";
+//const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud";
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
