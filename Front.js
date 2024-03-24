@@ -5,22 +5,20 @@ const app = express();
 
 // Built-in Express body parsing middleware
 app.use(express.json()); // For parsing application/json
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
 
 // Set the template engine to EJS and views directory
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+app.set("views", path.join(__dirname, "/public/views"));
+app.set("view engine", "ejs");
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
 
 //const base_url = "http://10.104.3.240";
 const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud";
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use(express.static('public'));
+
 
 app.get('/', async (req, res) => {
     try {
