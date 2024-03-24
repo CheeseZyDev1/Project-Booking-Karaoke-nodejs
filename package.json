@@ -1,12 +1,14 @@
 {
   "name": "Project-Booking-Karaoke-nodejs",
   "version": "1.0.0",
-  "description": "",
-  "main": "Front.js",
+  "description": "A brief description of your project.",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
     "start": "node Front.js",
     "dev": "nodemon Front.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": " node Front.js"
   },
   "keywords": [],
   "author": "",
