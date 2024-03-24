@@ -15,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-const base_url = "http://10.104.3.240:3000";
+const base_url = "http://10.104.3.240";
 //const base_url = "http://node56355-noderest-1.proen.app.ruk-com.cloud";
 
 app.set('view engine', 'ejs');
