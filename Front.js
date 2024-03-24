@@ -1,5 +1,5 @@
 const express = require('express');
-const methodOverride = require('method-override');
+//const methodOverride = require('method-override');
 const path = require('path');
 const app = express();
 
@@ -8,7 +8,7 @@ app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
 // Method Override for forms that can't send PUT/DELETE directly
-app.use(methodOverride('_method'));
+//app.use(methodOverride('_method'));
 
 // Set the template engine to EJS and views directory
 app.set('view engine', 'ejs');
